@@ -1,4 +1,7 @@
 {% extends "layout.html" %} {% block content %}
+<form action="/sign-out" method="GET">
+  <button class="btn">Sign out</button>
+</form>
 <div class="main-title">
   <h2 class="mini-title">Input Database</h2>
   <form action="/input-db-do" method="POST" enctype="multipart/form-data">

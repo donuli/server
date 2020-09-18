@@ -1,4 +1,7 @@
 {% extends "layout.html" %} {% block content %}
+<form action="/sign-out" method="GET">
+  <button class="btn">Sign out</button>
+</form>
 
 <div class="main-title">
   <h2 class="mini-title">Verified</h2>
@@ -7,7 +10,7 @@
     <button class="btn">Input DB</button>
   </form>
 
-  <form action="/output-db" method="GET">
+  <form action="/export" method="GET">
     <button class="btn">Output DB</button>
   </form>
 </div>

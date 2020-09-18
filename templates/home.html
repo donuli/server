@@ -1,5 +1,9 @@
 {% extends "layout.html" %} {% block content %} {% if session['logged_in'] %}
 
+<form action="/sign-out" method="GET">
+  <button class="btn">Sign out</button>
+</form>
+
 <form action="/non-labelled" method="GET">
   <button class="btn">Non-Labelled</button>
 </form>

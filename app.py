@@ -74,8 +74,15 @@ def sign_up_do():
             sql = 'insert into USER (username,password,email) value (%s, %s, %s)'
             curs.execute(sql, data)
             conn.commit()
-            conn.close()
-            return render_template('signIn.html')
+        conn.close()
+        return render_template('signIn.html')
+
+
+@app.route("/sign-out")
+def sign_out():
+    """Logout Form"""
+    session['logged_in'] = False
+    return redirect(url_for('home'))
 
 
 @app.route('/non-labelled', methods=['GET', 'POST'])
@@ -176,6 +183,9 @@ def input_db_do():
             if file == request.form['csv']:
                 filename = open(file, 'r')
                 csvRead = csv.reader(filename)
+                conn = pymysql.connect(
+                    host='localhost', user='root', password='0000', db='testdb')
+                curs = conn.cursor()
                 for row in csvRead:
                     image_name = (row[0])
                     x_min = (row[1])
@@ -183,16 +193,13 @@ def input_db_do():
                     x_max = (row[3])
                     y_max = (row[4])
                     label = (row[5])
-                    conn = pymysql.connect(
-                        host='localhost', user='root', password='0000', db='testdb')
-                    curs = conn.cursor()
                     sql = "insert into DATA (image, xmin, ymin, xmax, ymax, label) value ( %s, %f, %f, %f, %f, %s)"
                     curs.execute(
                         sql, (image_name, x_min, x_max, y_min, y_min, label))
 
                     conn.commit()
                     filename.close()
-                    conn.close()
+                conn.close()
 
                 return 'DB write success!!'
             else:
@@ -208,7 +215,7 @@ def export():
     sql = 'select * from DATA'
     curs.execute(sql)
     output = curs.fetchall()
-
+    conn.close()
     return render_template('export.html', files=files, output=output)
 
 
@@ -226,9 +233,12 @@ def export_do():
         writer.writerow(["image", "xmin", "ymin", "xmax", "ymax", "label"])
         for item in output:
             writer.writerow(list(item.values()))
+        conn.close()
+
     else:
         return render_template('retry')
 
 
 if __name__ == '__main__':
+    app.secret_key = "123123123"
     app.run(host='0.0.0.0', debug=True)

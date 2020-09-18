@@ -1,7 +1,10 @@
 {% extends "layout.html" %} {% block content %}
+<form action="/sign-out" method="GET">
+  <button class="btn">Sign out</button>
+</form>
 <div class="main-title">
-  <h2 class="mini-title">Image upload</h2>
-  <form action="/image-up-do" method="POST" enctype="multipart/form-data">
+  <h2 class="mini-title">Image Download</h2>
+  <form action="/image-down-do" method="POST" enctype="multipart/form-data">
     {% for file in files %}
     <li>
       <label for="item">{{file}}</label> <button id="item">Download</button>
