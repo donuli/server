@@ -1,0 +1,15 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="main-title">
+  <h2 class="mini-title">Non-Labelled Data</h2>
+
+  <form action="/image-up" method="GET">
+    <button class="btn">Upload</button>
+  </form>
+
+  <form action="/image-down" method="GET">
+    <button class="btn">Download</button>
+  </form>
+</div>
+
+{% endblock %}

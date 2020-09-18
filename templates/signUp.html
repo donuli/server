@@ -1,0 +1,24 @@
+{% extends "layout.html" %} {% block content %} {% if session['logged_in'] %}
+<p>Already sign in!</p>
+{% else %}
+
+<div class="main-title">
+  <h2 class="mini-title">Sign Up</h2>
+
+  <form action="/sign-up-go" method="POST">
+    <div class="userinfo">
+      <label class="userinfo-title">아이디</label>
+      <input type="username" name="username" placeholder="ID" />
+
+      <label class="userinfo-title">비밀번호</label>
+      <input type="password" name="password" placeholder="password" />
+
+      <label class="userinfo-title">이메일</label>
+      <input type="email" name="email" placeholder="email@naver.com" />
+
+      <input type="submit" class="btn" value="Sign UP" />
+    </div>
+  </form>
+</div>
+
+{% endif %} {% endblock %}

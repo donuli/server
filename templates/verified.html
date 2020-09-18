@@ -1,0 +1,15 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="main-title">
+  <h2 class="mini-title">Verified</h2>
+
+  <form action="/input-db" method="GET">
+    <button class="btn">Input DB</button>
+  </form>
+
+  <form action="/output-db" method="GET">
+    <button class="btn">Output DB</button>
+  </form>
+</div>
+
+{% endblock %}

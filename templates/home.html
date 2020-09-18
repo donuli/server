@@ -1,0 +1,33 @@
+{% extends "layout.html" %} {% block content %} {% if session['logged_in'] %}
+
+<form action="/non-labelled" method="GET">
+  <button class="btn">Non-Labelled</button>
+</form>
+
+<form action="/labelled" method="GET">
+  <button class="btn">Labelled</button>
+</form>
+
+<form action="/verified" method="GET">
+  <button class="btn">Verified</button>
+</form>
+
+<div class="welcome">
+  <h3 class="welcome_text">asd</h3>
+</div>
+
+{% else %}
+
+<form action="/sign-in" method="GET">
+  <button class="btn">Sign In</button>
+</form>
+
+<form action="/sign-up" method="GET">
+  <button class="btn">Sign Up</button>
+</form>
+
+<div class="welcome">
+  <h3 class="welcome_text">asd</h3>
+</div>
+
+{% endif %} {% endblock %}

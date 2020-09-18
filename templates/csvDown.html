@@ -1,0 +1,12 @@
+{% extends "layout.html" %} {% block content %}
+<div class="main-title">
+  <h2 class="mini-title">CSV upload</h2>
+  <form action="/csv-up-do" method="POST" enctype="multipart/form-data">
+    {% for file in files %}
+    <li>
+      <label for="item">{{file}}</label> <button id="item">Download</button>
+    </li>
+    {% endfor %}
+  </form>
+</div>
+{% endblock %}

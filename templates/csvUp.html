@@ -1,0 +1,13 @@
+{% extends "layout.html" %} {% block content %}
+<div class="main-title">
+  <h2 class="mini-title">CSV upload</h2>
+  <form action="/image-up-do" method="POST" enctype="multipart/form-data">
+    <input type="file" name="image" />
+    <input type="submit" />
+  </form>
+  <h3 class="list">list</h3>
+  {% for file in files %}
+  <li>{{file}}</li>
+  {% endfor %}
+</div>
+{% endblock %}

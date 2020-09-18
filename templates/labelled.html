@@ -1,0 +1,15 @@
+{% extends "layout.html" %} {% block content %}
+
+<div class="main-title">
+  <h2 class="mini-title">Labelled Data</h2>
+
+  <form action="/csv-up" method="GET">
+    <button class="btn">Upload</button>
+  </form>
+
+  <form action="/csv-down" method="GET">
+    <button class="btn">Download</button>
+  </form>
+</div>
+
+{% endblock %}
