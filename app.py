@@ -208,15 +208,14 @@ def input_db_do():
 
 @app.route('/export', methods=['GET', 'POST'])
 def export():
-    files = os.listdir("./uploaded_csv")
-    conn = pymysql.connect(host='localhost', user='root',
+    conn = pymysql.connect(host='172.17.0.3', user='root',
                            password='0000', db='testdb')
     curs = conn.cursor()
     sql = 'select * from DATA'
     curs.execute(sql)
     output = curs.fetchall()
     conn.close()
-    return render_template('export.html', files=files, output=output)
+    return render_template('export.html', output=output)
 
 
 @app.route('/export-do', methods=['GET', 'POST'])
@@ -234,6 +233,7 @@ def export_do():
         for item in output:
             writer.writerow(list(item.values()))
         conn.close()
+        return redirect("/export")
 
     else:
         return render_template('retry')
@@ -241,4 +241,4 @@ def export_do():
 
 if __name__ == '__main__':
     app.secret_key = "123123123"
-    app.run(host='0.0.0.0', debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
