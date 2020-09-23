@@ -17,13 +17,8 @@
     <h4>y_min</h4>
     <h4>y_max</h4>
     <h4>label</h4>
-    {% for i in range(len(output)) %}
-    <span>{{output[i][0]}}</span>
-    <span>{{output[i][1]}}</span>
-    <span>{{output[i][2]}}</span>
-    <span>{{output[i][3]}}</span>
-    <span>{{output[i][4]}}</span>
-    <span>{{output[i][5]}}</span>
+    {% for i in output %}
+    <span>{{i}}</span>
     {% endfor %}
   </section>
 </div>

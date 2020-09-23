@@ -4,12 +4,21 @@
 </form>
 <div class="main-title">
   <h2 class="mini-title">Image Download</h2>
-  <form action="/image-down-do" method="POST" enctype="multipart/form-data">
+  <ul>
     {% for file in files %}
     <li>
-      <label for="item">{{file}}</label> <button id="item">Download</button>
+      <form action="/image-down-do" method="POST" enctype="multipart/form-data">
+        <input
+          type="text"
+          style="border: none; outline: none"
+          name="img"
+          value="{{file}}"
+          readonly
+        />
+        <input type="submit" />
+      </form>
     </li>
     {% endfor %}
-  </form>
+  </ul>
 </div>
 {% endblock %}

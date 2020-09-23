@@ -23,9 +23,9 @@ def sign_in():
 def sign_in_do():
     if request.method == 'POST':
         data = [request.form['username'], request.form['password']]
-        conn = pymysql.connect(host='172.17.0.3', user='root',
+        conn = pymysql.connect(host='172.17.0.2', user='root',
                                password='0000', db='testdb')
-        curs = conn.cusor()
+        curs = conn.cursor()
         sql = 'select username,password from USER'
         curs.execute(sql)
         output = curs.fetchall()
@@ -56,9 +56,9 @@ def sign_up_do():
     if request.method == 'POST':
         data = [request.form['username'],
                 request.form['password'], request.form['email']]
-        conn = pymysql.connect(host='172.17.0.3', user='root',
+        conn = pymysql.connect(host='172.17.0.2', user='root',
                                password='0000', db='testdb')
-        curs = conn.cusor()
+        curs = conn.cursor()
 
         sql = 'select username from USER'
         curs.execute(sql)
@@ -140,7 +140,7 @@ def csv_up_do():
     if request.method == 'POST':
         csv = request.files['csv']
         csv.save('./uploaded_csv/' + secure_filename(csv.filename))
-        return 'Csv upload success!'
+        return 'CSV upload success!'
     else:
         return render_template('page_not_found.html')
 
@@ -208,7 +208,7 @@ def input_db_do():
 
 @app.route('/export', methods=['GET', 'POST'])
 def export():
-    conn = pymysql.connect(host='172.17.0.3', user='root',
+    conn = pymysql.connect(host='172.17.0.2', user='root',
                            password='0000', db='testdb')
     curs = conn.cursor()
     sql = 'select * from DATA'
