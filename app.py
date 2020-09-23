@@ -118,7 +118,7 @@ def image_down_do():
         files = os.listdir("./uploaded_img")
         for file in files:
             if file == request.form['img']:
-                return send_file("./uploded_img" + request.form['img'], attachment_filename=request.form['img'], as_attachment=True)
+                return send_file("./uploaded_img/" + request.form['img'], attachment_filename=request.form['img'], as_attachment=True)
 
     else:
         return 'no search file...'
@@ -157,7 +157,7 @@ def csv_down_do():
         files = os.listdir("./uploaded_csv")
         for file in files:
             if file == request.form['csv']:
-                return send_file("./uploded_csv" + request.form['csv'], attachment_filename=request.form['csv'], as_attachment=True)
+                return send_file("./uploaded_csv/" + request.form['csv'], attachment_filename=request.form['csv'], as_attachment=True)
 
     else:
         return 'no search file...'
@@ -184,7 +184,7 @@ def input_db_do():
                 filename = open(file, 'r')
                 csvRead = csv.reader(filename)
                 conn = pymysql.connect(
-                    host='localhost', user='root', password='0000', db='testdb')
+                    host='172.17.0.2', user='root', password='0000', db='testdb')
                 curs = conn.cursor()
                 for row in csvRead:
                     image_name = (row[0])
@@ -221,7 +221,7 @@ def export():
 @app.route('/export-do', methods=['GET', 'POST'])
 def export_do():
     if request.method == 'POST':
-        conn = pymysql.connect(host='localhost', user='root',
+        conn = pymysql.connect(host='172.17.0.2', user='root',
                                password='0000', db='testdb')
         curs = conn.cursor()
         sql = 'select * from DATA'
