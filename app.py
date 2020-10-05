@@ -1,7 +1,6 @@
 import os
 import csv
 from flask import Flask, url_for, render_template, request, redirect, send_file, session, send_file
-from flask_sqlalchemy import SQLAlchemy
 from werkzeug.utils import secure_filename
 import pymysql
 
@@ -24,7 +23,7 @@ def sign_in_do():
     if request.method == 'POST':
         data = [request.form['username'], request.form['password']]
         conn = pymysql.connect(host='172.17.0.2', user='root',
-                               password='0000', db='testdb')
+                               password='0000', db='userinfo')
         curs = conn.cursor()
         sql = 'select username,password from USER'
         curs.execute(sql)
@@ -57,7 +56,7 @@ def sign_up_do():
         data = [request.form['username'],
                 request.form['password'], request.form['email']]
         conn = pymysql.connect(host='172.17.0.2', user='root',
-                               password='0000', db='testdb')
+                               password='0000', db='userinfo')
         curs = conn.cursor()
 
         sql = 'select username from USER'
@@ -184,7 +183,7 @@ def input_db_do():
                 filename = open(file, 'r')
                 csvRead = csv.reader(filename)
                 conn = pymysql.connect(
-                    host='172.17.0.2', user='root', password='0000', db='testdb')
+                    host='172.17.0.2', user='root', password='0000', db='data')
                 curs = conn.cursor()
                 for row in csvRead:
                     image_name = (row[0])
@@ -195,7 +194,7 @@ def input_db_do():
                     label = (row[5])
                     sql = "insert into DATA (image, xmin, ymin, xmax, ymax, label) value ( %s, %f, %f, %f, %f, %s)"
                     curs.execute(
-                        sql, (image_name, x_min, x_max, y_min, y_min, label))
+                        sql, (image_name, x_min, y_min, x_max, y_max, label))
 
                     conn.commit()
                     filename.close()
@@ -209,7 +208,7 @@ def input_db_do():
 @app.route('/export', methods=['GET', 'POST'])
 def export():
     conn = pymysql.connect(host='172.17.0.2', user='root',
-                           password='0000', db='testdb')
+                           password='0000', db='data')
     curs = conn.cursor()
     sql = 'select * from DATA'
     curs.execute(sql)
@@ -222,7 +221,7 @@ def export():
 def export_do():
     if request.method == 'POST':
         conn = pymysql.connect(host='172.17.0.2', user='root',
-                               password='0000', db='testdb')
+                               password='0000', db='data')
         curs = conn.cursor()
         sql = 'select * from DATA'
         curs.execute(sql)
@@ -241,4 +240,4 @@ def export_do():
 
 if __name__ == '__main__':
     app.secret_key = "123123123"
-    app.run(host='0.0.0.0', port=80, debug=True)
+    app.run(host='0.0.0.0', port=8080, debug=True)
