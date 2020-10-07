@@ -37,7 +37,7 @@ def sign_in_do():
         try:
             if data in userinfo:
                 session['logged_in'] = True
-                return redirect(url_for('home'))
+                return redirect('/')
             else:
                 return 'Retry'
         except:
@@ -178,31 +178,34 @@ def input_db():
 def input_db_do():
     if request.method == 'POST':
         files = os.listdir("./uploaded_csv")
-        for file in files:
-            if file == request.form['csv']:
-                filename = open(file, 'r')
-                csvRead = csv.reader(filename)
-                conn = pymysql.connect(
-                    host='172.17.0.2', user='root', password='0000', db='data')
-                curs = conn.cursor()
-                for row in csvRead:
-                    image_name = (row[0])
-                    x_min = (row[1])
-                    y_min = (row[2])
-                    x_max = (row[3])
-                    y_max = (row[4])
-                    label = (row[5])
-                    sql = "insert into DATA (image, xmin, ymin, xmax, ymax, label) value ( %s, %f, %f, %f, %f, %s)"
-                    curs.execute(
-                        sql, (image_name, x_min, y_min, x_max, y_max, label))
+        file = request.form['csv']
+        if file in files:
+            filename = open(f"./uploaded_csv/{file}", 'r',encoding='utf-8')
+            csvRead = csv.reader(filename)
+            labeldata = []
+            for row in csvRead:
+                labeldata.append(row)
+            
+            print(type(csvRead))
+            conn = pymysql.connect(host='172.17.0.2', user='root', password='0000', db='data')
+            curs = conn.cursor()
+            for row in labeldata[1:]:
+                image_name = (row[0])
+                x_min = (row[1])
+                y_min = (row[2])
+                x_max = (row[3])
+                y_max = (row[4])
+                label = (row[5])
+                sql = "insert into DATA (image, xmin, ymin, xmax, ymax, label) value ( %s, %s, %s, %s, %s, %s)"
+                curs.execute(
+                    sql, (image_name, x_min, y_min, x_max, y_max, label))
 
-                    conn.commit()
-                    filename.close()
-                conn.close()
-
-                return 'DB write success!!'
-            else:
-                return 'Failed...'
+                conn.commit()       
+            filename.close()    
+            conn.close()
+            return 'DB write success!!'
+        else:
+            return 'Failed...'
 
 
 @app.route('/export', methods=['GET', 'POST'])
@@ -226,13 +229,16 @@ def export_do():
         sql = 'select * from DATA'
         curs.execute(sql)
         output = curs.fetchall()
-        file = open("dataset.csv", mode='w')
+        file = open("dataset.csv", mode='w',encoding='utf-8')
         writer = csv.writer(file)
         writer.writerow(["image", "xmin", "ymin", "xmax", "ymax", "label"])
         for item in output:
-            writer.writerow(list(item.values()))
+            writer.writerow([item[1],item[2],item[3], item[4],item[5],item[6]])
+            print(item)
         conn.close()
-        return redirect("/export")
+        file.close()
+        return send_file('./dataset.csv',attachment_filename='dataset.csv',as_attachment=True)
+
 
     else:
         return render_template('retry')

@@ -4,11 +4,12 @@
 </form>
 <div class="main-title">
   <h2 class="mini-title">Input Database</h2>
-  <form action="/input-db-do" method="POST" enctype="multipart/form-data">
     {% for file in files %}
-    <li><label for="item">{{file}}</label> <button id="item">Input</button></li>
+      <form action="/input-db-do" method="POST" enctype="multipart/form-data">
+       <input type="text" name="csv" value="{{file}}" readonly/>
+       <input type="submit" />
+      </form>
     {% endfor %}
-  </form>
   <section>
     <h4>image name</h4>
     <h4>x_min</h4>

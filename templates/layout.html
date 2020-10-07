@@ -3,17 +3,23 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}?dssaaqa">
     <title>Hankisul Data center</title>
   </head>
   <body>
-    <div>
-      <h1 class="title">Hankisul Data Center</h1>
-    </div>
-    <br />
-    {% block content %}{% endblock %}
-    <br />
-    <div class="foot">
+    <div class="main">
+      <div class="title">
+        <img class="title_logo" src="{{url_for('static', filename='images/logo.png')}}" />
+        <div>
+          <h1 class="title_name">Hankisul Data Center</h1>
+        </div>
+      </div>
+      <br />
+      {% block content %}{% endblock %}
+      <br />
+      <div class="foot">
       COPYRIGHT ©2017 HANKISUL Co., Ltd.. ALL RIGHTS RESERVED.
+      </div>
     </div>
   </body>
 </html>
