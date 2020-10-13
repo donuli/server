@@ -6,7 +6,7 @@
   <h2 class="mini-title">Input Database</h2>
     {% for file in files %}
       <form action="/input-db-do" method="POST" enctype="multipart/form-data">
-       <input type="text" name="csv" value="{{file}}" readonly/>
+       <input type="text" style="border: none; outline: none" name="csv" value="{{file}}" readonly/>
        <input type="submit" />
       </form>
     {% endfor %}
